@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    {"source": "/api/cgv/:path(.*)", "destination": "http://ticket.cgv.co.kr/:path"}
+  ]
+}
