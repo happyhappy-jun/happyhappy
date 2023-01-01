@@ -3,13 +3,13 @@ import { CSchedule, Schedule } from "../types/type";
 import axios from "axios";
 import parseXmlToJson from "../utils/parseXmlToJson";
 
-const useMovieQuery = (playymd: string) => {
+const useMovieQuery = () => {
   return useQuery<CSchedule>({
     queryKey: ["movie"],
     queryFn: async () => {
       const { data } = await axios({
         method: "post",
-        url: "/api/CGV2011/RIA/CJ000.aspx/CJ_HP_SCHEDULE_SC_SCREEN_MOVIE",
+        url: "/api/cgv/CGV2011/RIA/CJ000.aspx/CJ_HP_SCHEDULE_SC_SCREEN_MOVIE",
         data: {
           REQSITE: "x02PG4EcdFrHKluSEQQh4A==",
           TheaterCd: "LMP+XuzWskJLFG41YQ7HGA==",
