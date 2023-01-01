@@ -9,7 +9,7 @@ const useMoviesQuery = () => {
     queryFn: async () => {
       const { data } = await axios({
         method: "post",
-        url: "/api/cgv/CGV2011/RIA/CJ000.aspx/CJ_TICKET_SCHEDULE_SC_SCREEN_DEFAULT",
+        url: "/api/CGV2011/RIA/CJ000.aspx/CJ_TICKET_SCHEDULE_SC_SCREEN_DEFAULT",
         data: {
           REQSITE: "x02PG4EcdFrHKluSEQQh4A==",
           ISNormal: "ECFppiyFz/nvSGsg7VwPQw==",

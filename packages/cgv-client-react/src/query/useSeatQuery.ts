@@ -9,7 +9,7 @@ const useSeatQuery = (movieCD: string, playYMD: string) => {
     queryFn: async () => {
       const { data } = await axios({
         method: "post",
-        url: "/api/cgv/CGV2011/RIA/CJ000.aspx/CJ_TICKET_016",
+        url: "/api/CGV2011/RIA/CJ000.aspx/CJ_TICKET_016",
         data: {
           REQSITE: "x02PG4EcdFrHKluSEQQh4A==",
           TheaterCd: "LMP+XuzWskJLFG41YQ7HGA==",
