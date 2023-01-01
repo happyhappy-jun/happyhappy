@@ -7,11 +7,11 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: 'http://ticket.cgv.co.kr',
+        target: "http://ticket.cgv.co.kr",
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
-    }
-  }
-})
+    },
+  },
+});
