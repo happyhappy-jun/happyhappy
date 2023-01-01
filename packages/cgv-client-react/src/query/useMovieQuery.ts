@@ -3,7 +3,7 @@ import { CSchedule, Schedule } from "../types/type";
 import axios from "axios";
 import parseXmlToJson from "../utils/parseXmlToJson";
 
-const useMovieQuery = (playymd: string) => {
+const useMovieQuery = () => {
   return useQuery<CSchedule>({
     queryKey: ["movie"],
     queryFn: async () => {

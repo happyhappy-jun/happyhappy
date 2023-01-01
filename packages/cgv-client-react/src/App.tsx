@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import { CMovie, CPlayDay } from "./types/type";
 import { Button, FormControl, HStack, Select, Tag } from "@chakra-ui/react";
@@ -10,16 +10,14 @@ import useMovieQuery from "./query/useMovieQuery";
 import useSeatQuery from "./query/useSeatQuery";
 
 function App() {
-  const [count, setCount] = useState(0);
   const {
     handleSubmit,
     register,
-    getValues,
     watch,
     formState: { errors, isSubmitting },
   } = useForm();
   const watchAllFields = watch();
-  const { data: movieData, isLoading } = useMovieQuery("");
+  const { data: movieData, isLoading } = useMovieQuery();
   const { data: seatData, refetch } = useSeatQuery(
     movieData
       ? pipe(
