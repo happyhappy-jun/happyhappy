@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api/cgv": {
+      "/api": {
         target: "http://ticket.cgv.co.kr",
         changeOrigin: true,
         secure: false,

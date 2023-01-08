@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import parseXmlToJson from "../utils/parseXmlToJson";
-import { SeatResponse } from "../types/seat";
+import { NewDataSet, SeatResponse } from "../types/seat";
+import { encrypt } from "../utils/crypto";
 
-const useSeatQuery = (movieCD: string, playYMD: string) => {
-  return useQuery({
+const useSeatQuery = (movieCD: string, playYMD: string, enabled: boolean) => {
+  return useQuery<NewDataSet>({
     queryKey: ["seat", movieCD, playYMD],
     queryFn: async () => {
       const { data } = await axios({
@@ -13,15 +14,15 @@ const useSeatQuery = (movieCD: string, playYMD: string) => {
         data: {
           REQSITE: "x02PG4EcdFrHKluSEQQh4A==",
           TheaterCd: "LMP+XuzWskJLFG41YQ7HGA==",
-          MovieCd: movieCD,
-          PlayYMD: playYMD,
+          MovieCd: encrypt(movieCD),
+          PlayYMD: encrypt(playYMD),
           ScreenCd: "nG6tVgEQPGU2GvOIdnwTjg==",
           PlayNum: "nG6tVgEQPGU2GvOIdnwTjg==",
         },
       });
       return parseXmlToJson<SeatResponse>(data?.d.DATA)["NewDataSet"];
     },
-    enabled: !movieCD && !playYMD,
+    enabled: enabled,
   });
 };
 
