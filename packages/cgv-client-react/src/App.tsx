@@ -1,11 +1,8 @@
-import React from "react";
+import React, { Fragment, useEffect } from "react";
 import "./App.css";
 import { CMovie, CPlayDay } from "./types/type";
 import { Button, FormControl, HStack, Select, Tag } from "@chakra-ui/react";
-import { encrypt } from "./utils/crypto";
 import { useForm } from "react-hook-form";
-import { filter, match } from "fp-ts/Array";
-import { pipe } from "fp-ts/function";
 import useMovieQuery from "./query/useMovieQuery";
 import useSeatQuery from "./query/useSeatQuery";
 
@@ -17,51 +14,45 @@ function App() {
     formState: { errors, isSubmitting },
   } = useForm();
   const watchAllFields = watch();
-  const { data: movieData, isLoading } = useMovieQuery();
-  const { data: seatData, refetch } = useSeatQuery(
-    movieData
-      ? pipe(
-          movieData!.Movies.CMovie,
-          filter((x: CMovie) => x.MOVIE_NM === watch("name")),
-          match(
-            () => encrypt(""),
-            (as: CMovie[]) => encrypt(as[0].MOVIE_CD.toString())
-          )
-        )
-      : encrypt(""),
-    encrypt(watch("date"))
-  );
+  const { data: movieData, isLoading: isMovieQueryLoading } = useMovieQuery();
+  const {
+    data: seatData,
+    isLoading: isSeatQueryLoading,
+    refetch,
+  } = useSeatQuery(watch("MOVIE_CD"), watch("date"), false);
 
-  if (isLoading) {
+  useEffect(() => {
+    console.log(movieData);
+  }, []);
+
+  if (isMovieQueryLoading) {
     return <p>Loading...</p>;
   }
 
   const MovieOptions = (data: CMovie | CMovie[]) => {
     if (Array.isArray(data))
       return (
-        <>
+        <Fragment>
           {data.map((d) => (
-            <option key={d.MOVIE_NM} value={d.MOVIE_NM}>
-              {d.MOVIE_NM}
-            </option>
+            <option key={d.MOVIE_NM} value={d.MOVIE_CD} label={d.MOVIE_NM} />
           ))}
-        </>
+        </Fragment>
       );
-    return <option value={data.MOVIE_NM}>{data.MOVIE_NM}</option>;
+    return (
+      <option key={data.MOVIE_NM} value={data.MOVIE_CD} label={data.MOVIE_NM} />
+    );
   };
 
   const PlayDayOptions = (data: CPlayDay | CPlayDay[]) => {
     if (Array.isArray(data))
       return (
-        <>
+        <Fragment>
           {data.map((d) => (
-            <option key={d.PLAY_YMD} value={d.PLAY_YMD}>
-              {d.PLAY_YMD}
-            </option>
+            <option key={d.PLAY_YMD} value={d.PLAY_YMD} label={d.PLAY_YMD} />
           ))}
-        </>
+        </Fragment>
       );
-    return <option value={data.PLAY_YMD}>{data.PLAY_YMD}</option>;
+    return <option value={data.PLAY_YMD} />;
   };
 
   const onSubmit = () => {
@@ -72,7 +63,7 @@ function App() {
     <div className="App">
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={!!errors.name}>
-          <Select id="movie" placeholder="영화 선택" {...register("name")}>
+          <Select id="movie" placeholder="영화 선택" {...register("MOVIE_CD")}>
             {MovieOptions(movieData!.Movies.CMovie)}
           </Select>
           <Select placeholder="날짜 선택" {...register("date")}>
