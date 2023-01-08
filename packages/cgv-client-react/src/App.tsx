@@ -34,12 +34,20 @@ function App() {
       return (
         <Fragment>
           {data.map((d) => (
-            <option key={d.MOVIE_NM} value={d.MOVIE_CD} label={d.MOVIE_NM} />
+            <option
+              key={d.MOVIE_NM}
+              value={d.MOVIE_CD}
+              label={d.MOVIE_NM.toString()}
+            />
           ))}
         </Fragment>
       );
     return (
-      <option key={data.MOVIE_NM} value={data.MOVIE_CD} label={data.MOVIE_NM} />
+      <option
+        key={data.MOVIE_NM}
+        value={data.MOVIE_CD}
+        label={data.MOVIE_NM.toString()}
+      />
     );
   };
 
@@ -48,7 +56,11 @@ function App() {
       return (
         <Fragment>
           {data.map((d) => (
-            <option key={d.PLAY_YMD} value={d.PLAY_YMD} label={d.PLAY_YMD} />
+            <option
+              key={d.PLAY_YMD}
+              value={d.PLAY_YMD}
+              label={d.PLAY_YMD.toString()}
+            />
           ))}
         </Fragment>
       );
